@@ -7,8 +7,9 @@
 #include "mystruct.h"
 
 FILE *fp, *fpid;
-registration()
+int registration()
 {
+    system("color 0B");
     int choice;
     printf("\t\t\t---Registration---\n");
     printf("\t\t1. Register as a student\n\t\t2. Register as a teacher\n");
@@ -98,8 +99,9 @@ registration()
     }
 }
 
-login()
+int login()
 {
+    system("color 0B");
     system("cls");
     int choice;
     printf("\t\t\t---Login---\n");
@@ -184,6 +186,7 @@ login()
         fclose(fp);
         printf("User not found.\n");
         Sleep(2000);
+        login();
         return 0;
         break;
     default:
@@ -193,7 +196,7 @@ login()
     }
 }
 
-takepassword(char pass[50])
+int takepassword(char pass[50])
 {
     char ch;
     int i = 0;

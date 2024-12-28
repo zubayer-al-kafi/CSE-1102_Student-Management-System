@@ -9,8 +9,8 @@
 
 int main()
 {
-    SetConsoleTitle("STUDENT MANAGEMENT SYSTEM");
     system("color 0B");
+    SetConsoleTitle("STUDENT MANAGEMENT SYSTEM");
     int opt;
     printf("\t\t\t---Welcome to the student management system---\n\n");
     //scroll text
