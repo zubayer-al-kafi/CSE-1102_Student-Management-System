@@ -1,3 +1,6 @@
+//CSE 1102 Project
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -13,16 +16,8 @@ int main()
     SetConsoleTitle("STUDENT MANAGEMENT SYSTEM");
     int opt;
     printf("\t\t\t---Welcome to the student management system---\n\n");
-    //scroll text
-    char *msg = "\t\t1. Registration\n\t\t2. Login\n\t\t3. Exit\n\n\t\tEnter your choice: ";
-    for(int i=0;msg[i]!='\0';i++)
-    {
-        printf("%c",msg[i]);
-        fflush(stdout);
-        Sleep(10);
-    }
-
-
+    printf("\t\t1. Registration\n\t\t2. Login\n\t\t3. Exit\n");
+    scrolltext("\n\t\tEnter your choice: ");
     scanf_s("%d", &opt);
     getchar();
     switch (opt)
@@ -37,12 +32,19 @@ int main()
         break;
     case 3:
         system("cls");
-        printf("\t\t\t---Exiting---\n");
-        Sleep(1000);
+        scrolltext("\t\t\tExiting");
+        for(int i=0; i<3; i++)
+        {
+            printf(".");
+            Sleep(500);
+        }
         exit(0); //exiting the program
         break;
     default:
-        printf("\t\t\t---Invalid choice---\n");
+        scrolltext("\t\t\t---Invalid choice---\n");
+        Sleep(1000);
+        system("cls");
+        main();
         break;
     }
 }

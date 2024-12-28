@@ -8,6 +8,7 @@
 #include "reg.h"
 #include "mystruct.h"
 #define MAX 9
+
 FILE *fp;
 int options(char *fid)
 {
@@ -16,7 +17,7 @@ int options(char *fid)
     int opt;
     printf("\t\t1. View your information\n\t\t2. Edit your information\n\t\t3. Delete your account\n");
     printf("\t\t4. Course Registration\n\t\t5. Logout\n");
-    printf("\n\t\tEnter your choice: ");
+    scrolltext("\n\t\tEnter your choice: ");
     scanf("%d", &opt);
     getchar();
     switch (opt)
@@ -29,12 +30,15 @@ int options(char *fid)
             if (strcmp(s.roll, fid) == 0)
             {
                 printf("\t\tName: %s\n\t\tEmail: %s\n\t\tPhone: %s\n\t\tRoll: %s\n", s.name, s.email, s.phone, s.roll);
-                break;
+                printf("\n\t\tPress any key to continue...");
+                getchar();
             }
         }
+        fclose(fp);
         options(fid);
         break;
     case 2:
+        editstdinfo(fid);
         options(fid);
         break;
     case 3:
@@ -46,7 +50,7 @@ int options(char *fid)
         break;
     case 5:
         printf("\n\t\tLogging out");
-        for(int i=0;i<3;i++)
+        for(int i=0; i<3; i++)
         {
             printf(".");
             fflush(stdin);
@@ -55,7 +59,7 @@ int options(char *fid)
         login();
         break;
     default:
-        printf("\t\t---Invalid choice---");
+        scrolltext("\t\t---Invalid choice---");
         Sleep(1000);
         options(fid);
         return 0;
@@ -68,8 +72,8 @@ int optiont(char *femail)
     system("cls");
     int opt;
     printf("\t\t1. View your information\n\t\t2. Edit your information\n\t\t3. Calculate GPA\n");
-    printf("\t\t4. CGPA Calculator\n\t\t5. Elect CR\n\t\t6. Logout\n");
-    printf("\n\t\tEnter your choice: ");
+    printf("\t\t4. Calculate CGPA\n\t\t5. Elect CR\n\t\t6. Search student\n\t\t7. Logout\n");
+    scrolltext("\n\t\tEnter your choice: ");
     scanf("%d", &opt);
     getchar();
     switch (opt)
@@ -90,12 +94,17 @@ int optiont(char *femail)
         getchar();
         optiont(femail);
         break;
+
     case 2:
+        edittcrinfo(femail);
+        optiont(femail);
         break;
+
     case 3:
         gpcal();
         optiont(femail);
         break;
+
     case 4:
         cgpcal();
         optiont(femail);
@@ -104,19 +113,25 @@ int optiont(char *femail)
         elect_cr();
         optiont(femail);
         break;
+
     case 6:
-        printf("\n\t\tLogging out");
-        for(int i=0;i<3;i++)
+        searchstd();
+        optiont(femail);
+        break;
+
+    case 7:
+        scrolltext("\n\t\tLogging out");
+        for(int i=0; i<3; i++)
         {
             printf(".");
             Sleep(500);
         }
         login();
         break;
+
     default:
-        printf("\n\n\t\t---Invalid choice---\n\n");
-        printf("\t\tPress any key to continue...");
-        getchar();
+        scrolltext("\n\n\t\t---Invalid choice---\n\n");
+        Sleep(2000);
         optiont(femail);
     }
 }
@@ -139,7 +154,7 @@ int gpcal()
         getchar();
         if (gp[i][0] > 4)
         {
-            printf("Invalid input\n");
+            scrolltext("Invalid input\n");
             printf("Press any key to continue...");
             getchar();
             return 0;
@@ -159,7 +174,7 @@ int gpcal()
     cg = (float)score / (float)total_credit;
     if (cg > 4)
     {
-        printf("Please give input carefully.\n");
+        scrolltext("Please give input carefully.\n");
     }
     else
         printf("THE GPA IS %.2f\n\n", cg);
@@ -172,13 +187,15 @@ int gpcal()
 int cgpcal()
 {
     int n;
-    printf("How many semesters?");
+    scrolltext("Enter the number of semesters : ");
     scanf("%d", &n);
     getchar();
+    system("cls");
+    printf("\t\t\tCGPA Calculator\n\n");
     float gp[n];
     for (int i = 0; i < n; i++)
     {
-        scanf("%f", &gp[i]);
+        scanf("\t\tGPA of semester %d : %f",i+1, &gp[i]);
         getchar();
     }
     float sum = 0;
@@ -189,7 +206,6 @@ int cgpcal()
     getchar();
     return 0;
 }
-
 
 
 int course_reg(char *fid)
@@ -206,12 +222,12 @@ int course_reg(char *fid)
     //now add id and sem with a space between them
     char check[20];
     int j=0;
-    for(int i=0;i<strlen(fid);i++)
+    for(int i=0; i<strlen(fid); i++)
     {
         check[j++]=fid[i];
     }
     check[j++]=' ';
-    for(int i=0;i<strlen(sem);i++)
+    for(int i=0; i<strlen(sem); i++)
     {
         check[j++]=sem[i];
     }
@@ -224,7 +240,7 @@ int course_reg(char *fid)
     {
         if (strcmp(check,fcheck)==0)
         {
-            printf("\n\t\tYou are already registered for this semester.\n");
+            scrolltext("\n\t\tYou are already registered for this semester.\n");
             printf("\n\t\tPress any key to continue...");
             getchar();
             fclose(fp);
@@ -252,7 +268,7 @@ int course_reg(char *fid)
         }
     }
     fclose(fp);
-    printf("\n\t\tSomething went wrong\n");
+    scrolltext("\n\t\tSomething went wrong\n");
     printf("\n\t\tPress any key to continue...");
     getchar();
 
@@ -260,89 +276,204 @@ int course_reg(char *fid)
 }
 
 
-//creating structures
 typedef struct
 {
-  char name[50];
-  int votes;
-
+    char name[50];
+    int votes;
 } candidate;
-candidate candidates[MAX]; //ekhane max holo 9
+
+candidate candidates[MAX];
 int candidates_count;
-int argc; char *argv;
+
+// Function prototypes
+bool vote(char name[]);
+void print_winner(void);
+bool check_tie(int most_votes);
+void reset_votes(void);
+
 int elect_cr()
-{ //check for argument count
-    if (argc < 3){
-
-        printf("Usage: Enter more candidates [candidate ...]\n ");
-        return 1;
-
-    }
- // check for max candidates
-    candidates_count = argc - 1;
-    if (candidates_count> MAX ){
-        printf("Max of 9 candidate allowed\n");
-        return 2;
-    }
-    // populate candidates
-    for (int i=0;i< candidates_count;i++){
-        strcpy(candidates[i].name,argv[i+1] );
-        candidates[i].votes =0;
-    }
-    // get number of voters
-    int voters_count;
-    printf("Number of Voters:\n");
-    scanf("%i", &voters_count);
-    for (int i=0; i<voters_count;i++)
-        { //get the vote
-        char name[50];
-        printf("Vote: ");
-        scanf("%s",name);
-     //validate the vote
-        if (!vote(name))
-            {
-            printf("Invalid vote\n");
-            }
-    }
-    // print winner
-    print_winner();
-return;
-}
-
-bool vote (char name[])
 {
-     for (int i=0;i< candidates_count;i++){
-     //checking if there's match by candidate name
-       if (strcmp(candidates[i].name,name)== 0){
+    system("cls");
+    printf("\t\t\t---CR Election---");
+    printf("\n\nEnter the number of candidates (max %d): ", MAX);
+    scanf("%d", &candidates_count);
+    getchar();
+    if (candidates_count <= 1 || candidates_count > MAX)
+    {
+        printf("\t\tInvalid number of candidates. Maximum is %d.\n", MAX);
+        printf("\n\t\tPress any key to continue...");
+        getchar();
+        return 1;
+    }
 
-        candidates[i].votes++; //increment votes
-        return true;
-       }
-     }
-     return false;
+    for (int i = 0; i < candidates_count; i++)
+    {
+        printf("Enter name/symbol for candidate %d: ", i + 1);
+        scanf("%s", candidates[i].name);
+        candidates[i].votes = 0;
+    }
+
+    while (1)
+    {
+        int voters_count;
+        printf("\nEnter the number of voters: ");
+        scanf("%d", &voters_count);
+
+        for (int i = 0; i < voters_count; i++)
+        {
+            char name[50];
+            printf("Vote %d: ", i + 1);
+            scanf("%s", name);
+
+            if (!vote(name))
+            {
+                printf("Invalid vote.\n");
+            }
+        }
+
+        // Determine the highest votes
+        int most_votes = 0;
+        for (int i = 0; i < candidates_count; i++)
+        {
+            if (candidates[i].votes > most_votes)
+            {
+                most_votes = candidates[i].votes;
+            }
+        }
+
+        // Check if there is a tie
+        if (check_tie(most_votes))
+        {
+            printf("\nThere is a tie. A re-election is required among the tied candidates.\n");
+
+            // Retain only the tied candidates and reset their votes
+            reset_votes();
+        }
+        else
+        {
+            // Print the winner(s) and exit the loop
+            print_winner();
+            break;
+        }
+    }
+
+    // Wait for user input to keep the console open
+    printf("\nPress any key to continue...");
+    getchar(); // Consume the newline left by the last input
+    getchar();
+    return 0;
 }
+
+// Update vote totals given a new vote
+bool vote(char name[])
+{
+    for (int i = 0; i < candidates_count; i++)
+    {
+        if (strcmp(candidates[i].name, name) == 0)
+        {
+            candidates[i].votes++;
+            return true;
+        }
+    }
+    return false;
+}
+
+// Print the winner(s) of the election
 void print_winner(void)
-{ // check for the most votes
-    int most_votes;
-       for (int i=0;i< candidates_count;i++)
+{
+    int most_votes = 0;
+
+    for (int i = 0; i < candidates_count; i++)
+    {
+        if (candidates[i].votes > most_votes)
         {
-      if(candidates[i].votes > most_votes)
-      {
-          most_votes = candidates[i].votes;
-
-      }
-
-    }
-    // check for the candidate with most votes
-    for (int i=0;i< candidates_count;i++)
-        {
-      if(candidates[i].votes == most_votes)
-      {
-         printf("%s\n",candidates[i].name);
-
-      }
-
+            most_votes = candidates[i].votes;
+        }
     }
 
-
+    for (int i = 0; i < candidates_count; i++)
+    {
+        if (candidates[i].votes == most_votes)
+        {
+            printf("\n\THE CR IS : %s\n", candidates[i].name);
+        }
+    }
 }
+
+// Check if there is a tie among candidates with the highest votes
+bool check_tie(int most_votes)
+{
+    int tie_count = 0;
+
+    for (int i = 0; i < candidates_count; i++)
+    {
+        if (candidates[i].votes == most_votes)
+        {
+            tie_count++;
+        }
+    }
+
+    // A tie occurs if more than one candidate has the highest votes
+    return tie_count > 1;
+}
+
+// Reset the votes of all candidates for a re-election
+void reset_votes(void)
+{
+    for (int i = 0; i < candidates_count; i++)
+    {
+        candidates[i].votes = 0;
+    }
+}
+
+int searchstd()
+{
+    printf("\n\t\tEnter the ID of the student : ");
+    char roll[10];
+    gets(roll);
+    system("cls");
+    printf("\t\t\t---Information of ID %s---\n\n",roll);
+    fp = fopen("stdinfo.txt", "r");
+    while (fscanf(fp, "%s %s %s %s", s.roll, s.name, s.email, s.phone) != EOF)
+    {
+        if (strcmp(s.roll, roll) == 0)
+        {
+            printf("\t\tName: %s\n\t\tEmail: %s\n\t\tPhone: %s\n\t\tRoll: %s\n", s.name, s.email, s.phone, s.roll);
+            printf("\n\nPress any key to continue...");
+            getchar();
+            return 0;
+        }
+    }
+    printf("\t\tSorry, there is no student with this ID.");
+    printf("\n\nPress any key to continue...");
+    getchar();
+    return 0;
+}
+
+int edittcrinfo(char *femail)
+{
+    /*fp = fopen("teacherinfo.txt","r");
+    while (fscanf(fp, "%s %s %s", t.email, t.name, t.phone) != EOF)
+    {
+        if (strcmp(t.email, femail) == 0)
+        {
+            fclose(fp);
+
+            printf("")
+            printf("\t\tName: %s\n\t\tEmail: %s\n\t\tPhone: %s\n", t.name, t.email, t.phone);
+            break;
+        }
+    }
+    */
+    printf("Press any key to continue...");
+    getchar();
+    return 0;
+}
+
+int editstdinfo(char *fid)
+{
+    printf("Press any key to continue...");
+    getchar();
+    return 0;
+}
+

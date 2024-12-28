@@ -4,5 +4,6 @@
 int registration();
 int login();
 int takepassword(char ch[50]);
+void scrolltext(char *str);
 
 #endif

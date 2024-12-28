@@ -5,7 +5,15 @@
 #include "option.h"
 #include "reg.h"
 #include "mystruct.h"
-
+void scrolltext(char *str)
+{
+    for(int i=0; i<strlen(str); i++)
+    {
+        printf("%c",str[i]);
+        fflush(stdin);
+        Sleep(10);
+    }
+}
 FILE *fp, *fpid;
 int registration()
 {
@@ -13,7 +21,7 @@ int registration()
     int choice;
     printf("\t\t\t---Registration---\n");
     printf("\t\t1. Register as a student\n\t\t2. Register as a teacher\n");
-    printf("\n\t\tEnter your choice: ");
+    scrolltext("\n\t\tEnter your choice: ");
     scanf_s("%d", &choice);
     getchar();
     switch (choice)
@@ -50,8 +58,14 @@ int registration()
             fpid = fopen("stdidpass.txt", "a");
             fprintf(fpid, "%s %s\n", s.roll, s.password);
             fclose(fpid);
+            scrolltext("\n\n\t\tRegistering");
+            for(int i=0; i<3; i++)
+            {
+                printf(".");
+                Sleep(500);
+            }
             printf("\033[1;32m\n\t\tRegistration successful!\n\033[0m\n");
-            printf("\t\tYour ID is your roll number : %s\n", s.roll);
+            printf("\n\t\tYour ID is your roll number : %s\n", s.roll);
             printf("\t\tPress any key to continue...\n");
             getchar();
             login();
@@ -86,7 +100,13 @@ int registration()
             fpid = fopen("teacheridpass.txt", "a");
             fprintf(fpid, "%s %s\n", t.email, t.password);
             fclose(fpid);
-            printf("\033[1;32m\n\t\tRegistration successful!\n\033[0m\n");
+            scrolltext("\n\n\t\tRegistering");
+            for(int i=0; i<3; i++)
+            {
+                printf(".");
+                Sleep(500);
+            }
+            printf("\033[1;32m\r\t\tRegistration successful!\n\033[0m\n");
             printf("\t\tPress any key to continue...\n");
             getchar();
             login();
@@ -105,8 +125,8 @@ int login()
     system("cls");
     int choice;
     printf("\t\t\t---Login---\n");
-    printf("\t\t1. Login as a student\n\t\t2. Login as a teacher\n");
-    printf("\n\t\tEnter your choice: ");
+    printf("\t\t1. Login as a student\n\t\t2. Login as a teacher\n\t\t3. Go Back\n");
+    scrolltext("\n\t\tEnter your choice: ");
     scanf("%d", &choice);
     getchar();
     char id[10], password[50];
@@ -128,9 +148,13 @@ int login()
                 if (strcmp(password, fpass) == 0)
                 {
                     fclose(fp);
-                    printf("\t\tLogging in...\n\n");
-                    Sleep(2000);
-                    printf("\033[1;32m\t\tLogin successful!\n\033[0m\n");
+                    scrolltext("\n\t\tLogging in");
+                    for(int i=0; i<3; i++)
+                    {
+                        printf(".");
+                        Sleep(500);
+                    }
+                    printf("\033[1;32m\r\t\tLogin successful!\n\033[0m\n");
                     printf("\t\tPress any key to continue...\n");
                     getchar();
                     options(fid);
@@ -139,7 +163,8 @@ int login()
                 else
                 {
                     fclose(fp);
-                    printf("\033[1;31m\t\tWrong Password.\n\033[0m\n");
+                    scrolltext("\033[1;31m\n\t\tWrong Password.\n\033[0m\n");
+                    //printf("\033[1;31m\t\tWrong Password.\n\033[0m\n");
                     Sleep(2000);
                     login();
                 }
@@ -166,9 +191,13 @@ int login()
                 if (strcmp(password, t.password) == 0)
                 {
                     fclose(fp);
-                    printf("\t\tLogging in...\n\n");
-                    Sleep(2000);
-                    printf("\033[1;32m\t\tLogin successful!\n\033[0m\n");
+                    printf("\n\t\tLogging in");
+                    for(int i=0; i<3; i++)
+                    {
+                        printf(".");
+                        Sleep(500);
+                    }
+                    printf("\033[1;32m\r\t\tLogin successful!\n\033[0m\n");
                     printf("\t\tPress any key to continue...\n");
                     getchar();
                     optiont(email);
@@ -177,7 +206,8 @@ int login()
                 else
                 {
                     fclose(fp);
-                    printf("Wrong Password.\n");
+                    scrolltext("\033[1;31m\t\tWrong Password.\n\033[0m\n");
+                    //printf("Wrong Password.\n");
                     Sleep(2000);
                     return 0;
                 }
@@ -185,12 +215,15 @@ int login()
         }
         fclose(fp);
         printf("User not found.\n");
-        Sleep(2000);
+        Sleep(1000);
         login();
         return 0;
         break;
+    case 3:
+        main();
+        break;
     default:
-        printf("\t\t\t---Invalid choice---\n");
+        scrolltext("\t\t\t---Invalid choice---\n");
         login();
         break;
     }
