@@ -1,0 +1,35 @@
+# depslib dependency file v1.0
+1735326361 source:d:\programming\c\lab project\main.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	<conio.h>
+	"reg.h"
+	"option.h"
+	"mystruct.h"
+
+1735306412 d:\programming\c\lab project\reg.h
+
+1735369844 source:d:\programming\c\lab project\reg.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	"option.h"
+	"reg.h"
+	"mystruct.h"
+
+1735325385 d:\programming\c\lab project\option.h
+
+1735306408 d:\programming\c\lab project\mystruct.h
+
+1735366156 source:d:\programming\c\lab project\option.c
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+	<windows.h>
+	"option.h"
+	"reg.h"
+	"mystruct.h"
+
