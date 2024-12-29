@@ -25,14 +25,15 @@ int options(char *fid)
     case 1:
         printf("\t\t\t---Your information---\n");
         fp = fopen("stdinfo.txt", "r");
-        while (fscanf(fp, "%s %s %s %s", s.roll, s.name, s.email, s.phone) != EOF)
+        while (fread(&s,sizeof(user),1,fp) != NULL)
         {
-            if (strcmp(s.roll, fid) == 0)
+            if (strcmp(fid,s.roll) == 0)
             {
                 fclose(fp);
                 printf("\t\tName: %s\n\t\tEmail: %s\n\t\tPhone: %s\n\t\tRoll: %s\n", s.name, s.email, s.phone, s.roll);
                 printf("\n\t\tPress any key to continue...");
                 getchar();
+                options(fid);
             }
         }
         fclose(fp);
@@ -83,7 +84,7 @@ int optiont(char *femail)
         printf("\n\n");
         printf("\t\t\t---Your information---\n");
         fp = fopen("teacherinfo.txt", "r");
-        while (fscanf(fp, "%s %s %s", t.email, t.name, t.phone) != EOF)
+        while (fread(&t,sizeof(user),1,fp) != NULL)
         {
             if (strcmp(t.email, femail) == 0)
             {
@@ -435,7 +436,7 @@ int searchstd()
     system("cls");
     printf("\t\t\t---Information of ID %s---\n\n",roll);
     fp = fopen("stdinfo.txt", "r");
-    while (fscanf(fp, "%s %s %s %s", s.roll, s.name, s.email, s.phone) != EOF)
+    while (fread(&s,sizeof(user),1,fp) != NULL)
     {
         if (strcmp(s.roll, roll) == 0)
         {

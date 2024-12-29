@@ -14,6 +14,13 @@ void scrolltext(char *str)
         Sleep(10);
     }
 }
+
+void takeinput(char ch[50])
+{
+    fgets(ch,50,stdin);
+    ch[strlen(ch)-1]=0;
+}
+
 FILE *fp, *fpid;
 int registration()
 {
@@ -31,13 +38,13 @@ int registration()
         system("cls");
         printf("\t\t\t---Student Registration---\n");
         printf("\t\tEnter your name: \t");
-        gets(s.name);
+        takeinput(s.name);
         printf("\t\tEnter your email: \t");
-        gets(s.email);
+        takeinput(s.email);
         printf("\t\tEnter your number: \t");
-        gets(s.phone);
+        takeinput(s.phone);
         printf("\t\tEnter your roll: \t");
-        gets(s.roll);
+        takeinput(s.roll);
         printf("\t\tEnter your password: \t");
         takepassword(s.password);
         char pass2[50];
@@ -45,26 +52,24 @@ int registration()
         takepassword(pass2);
         if (strcmp(s.password, pass2) != 0)
         {
+            fclose(fp);
             printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n");
             Beep(523, 500);
             Sleep(2000);
-            fclose(fp);
+            registration();
             return 0;
         }
         else
         {
-            fprintf(fp, "%s %s %s %s\n", s.roll, s.name, s.email, s.phone);
+            fwrite(&s, sizeof(user), 1, fp);
             fclose(fp);
-            fpid = fopen("stdidpass.txt", "a");
-            fprintf(fpid, "%s %s\n", s.roll, s.password);
-            fclose(fpid);
             scrolltext("\n\n\t\tRegistering");
             for(int i=0; i<3; i++)
             {
                 printf(".");
                 Sleep(500);
             }
-            printf("\033[1;32m\n\t\tRegistration successful!\n\033[0m\n");
+            printf("\033[1;32m\r\t\tRegistration successful!\n\033[0m\n");
             printf("\n\t\tYour ID is your roll number : %s\n", s.roll);
             printf("\t\tPress any key to continue...\n");
             getchar();
@@ -76,11 +81,11 @@ int registration()
         system("cls");
         printf("\t\t\t---Teacher Registration---\n");
         printf("\t\tEnter your name: \t");
-        gets(t.name);
+        takeinput(t.name);
         printf("\t\tEnter your email: \t");
-        gets(t.email);
+        takeinput(t.email);
         printf("\t\tEnter your number: \t");
-        gets(t.phone);
+        takeinput(t.phone);
         printf("\t\tEnter your password: \t");
         takepassword(t.password);
         printf("\t\tConfirm your password: \t");
@@ -91,15 +96,13 @@ int registration()
             fclose(fp);
             Beep(523, 500);
             Sleep(2000);
+            login();
             return 0;
         }
         else
         {
-            fprintf(fp, "%s %s %s\n", t.email, t.name, t.phone);
+            fwrite(&t, sizeof(user), 1, fp);
             fclose(fp);
-            fpid = fopen("teacheridpass.txt", "a");
-            fprintf(fpid, "%s %s\n", t.email, t.password);
-            fclose(fpid);
             scrolltext("\n\n\t\tRegistering");
             for(int i=0; i<3; i++)
             {
@@ -136,16 +139,16 @@ int login()
         system("cls");
         printf("\t\t\t---Student login---\n\n");
         printf("\t\tEnter your ID : \t\t");
-        gets(id);
+        takeinput(id);
         printf("\t\tEnter your password : \t\t");
         takepassword(password);
-        fp = fopen("stdidpass.txt", "r");
-        char fid[10], fpass[50];
-        while (fscanf(fp, "%s %s", fid, fpass) != EOF)
+        fp = fopen("stdinfo.txt", "r");
+
+        while (fread(&s, sizeof(user),1,fp) != NULL)
         {
-            if (strcmp(id, fid) == 0)
+            if (strcmp(id, s.roll) == 0)
             {
-                if (strcmp(password, fpass) == 0)
+                if (strcmp(password, s.password) == 0)
                 {
                     fclose(fp);
                     scrolltext("\n\t\tLogging in");
@@ -157,7 +160,7 @@ int login()
                     printf("\033[1;32m\r\t\tLogin successful!\n\033[0m\n");
                     printf("\t\tPress any key to continue...\n");
                     getchar();
-                    options(fid);
+                    options(id);
                     return 1;
                 }
                 else
@@ -171,7 +174,7 @@ int login()
             }
         }
         fclose(fp);
-        printf("User not found.\n");
+        printf("\033[1;31m\n\t\tUser not found.\n\033[0m");
         printf("Press any key to continue...");
         getchar();
         login();
@@ -181,12 +184,12 @@ int login()
         char email[50];
         printf("\t\t\t---Teacher Login---\n\n");
         printf("\t\tEnter your email: \t");
-        gets(email);
+        takeinput(email);
         printf("\t\tEnter your password: \t");
         takepassword(password);
-        fp = fopen("teacheridpass.txt", "r");
+        fp = fopen("teacherinfo.txt", "r");
 
-        while (fscanf(fp, "%s %s", t.email, t.password) != EOF)
+        while (fread(&t,sizeof(user),1,fp) != NULL)
         {
             if (strcmp(email, t.email) == 0)
             {
@@ -216,7 +219,7 @@ int login()
             }
         }
         fclose(fp);
-        printf("User not found.\n");
+        scrolltext("\t\tUser not found.\n");
         Sleep(1000);
         login();
         return 0;

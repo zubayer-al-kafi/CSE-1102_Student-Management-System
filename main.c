@@ -1,5 +1,8 @@
 //CSE 1102 Project
-
+//PROJECT NAME : STUDENT MANAGEMENT SYSTEM
+//          by
+//2307073,2307074,2307076
+//
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -18,7 +21,7 @@ int main()
     printf("\t\t\t---Welcome to the student management system---\n\n");
     printf("\t\t1. Registration\n\t\t2. Login\n\t\t3. Exit\n");
     scrolltext("\n\t\tEnter your choice: ");
-    scanf_s("%d", &opt);
+    scanf("%d", &opt);
     getchar();
     switch (opt)
     {

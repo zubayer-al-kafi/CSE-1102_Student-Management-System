@@ -9,6 +9,7 @@ typedef struct
     char phone[20];
     char roll[10];
 } user;
+
 user s,t;
 
 #endif
