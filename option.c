@@ -29,6 +29,7 @@ int options(char *fid)
         {
             if (strcmp(s.roll, fid) == 0)
             {
+                fclose(fp);
                 printf("\t\tName: %s\n\t\tEmail: %s\n\t\tPhone: %s\n\t\tRoll: %s\n", s.name, s.email, s.phone, s.roll);
                 printf("\n\t\tPress any key to continue...");
                 getchar();

@@ -31,13 +31,13 @@ int registration()
         system("cls");
         printf("\t\t\t---Student Registration---\n");
         printf("\t\tEnter your name: \t");
-        fgets(s.name, 50, stdin);
+        gets(s.name);
         printf("\t\tEnter your email: \t");
-        fgets(s.email, 50, stdin);
+        gets(s.email);
         printf("\t\tEnter your number: \t");
-        fgets(s.phone, 50, stdin);
+        gets(s.phone);
         printf("\t\tEnter your roll: \t");
-        fgets(s.roll, 50, stdin);
+        gets(s.roll);
         printf("\t\tEnter your password: \t");
         takepassword(s.password);
         char pass2[50];
@@ -172,6 +172,8 @@ int login()
         }
         fclose(fp);
         printf("User not found.\n");
+        printf("Press any key to continue...");
+        getchar();
         login();
         break;
     case 2:

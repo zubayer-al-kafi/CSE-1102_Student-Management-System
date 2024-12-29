@@ -2,29 +2,41 @@
 <CodeBlocks_layout_file>
 	<FileVersion major="1" minor="0" />
 	<ActiveTarget name="Debug" />
-	<File name="reg.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="128" topLine="0" />
-		</Cursor>
-	</File>
 	<File name="mystruct.h" open="1" top="0" tabpos="2" split="0" active="1" splitpos="0" zoom_1="0" zoom_2="0">
 		<Cursor>
 			<Cursor1 position="0" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="main.c" open="1" top="1" tabpos="3" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
-		<Cursor>
-			<Cursor1 position="832" topLine="25" />
-		</Cursor>
-	</File>
 	<File name="reg.c" open="1" top="0" tabpos="1" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="1948" topLine="42" />
+			<Cursor1 position="1030" topLine="0" />
 		</Cursor>
 		<Folding>
 			<Collapse line="8" />
+			<Collapse line="18" />
 			<Collapse line="122" />
-			<Collapse line="232" />
+		</Folding>
+	</File>
+	<File name="main.c" open="1" top="0" tabpos="3" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="832" topLine="0" />
+		</Cursor>
+	</File>
+	<File name="option.c" open="1" top="1" tabpos="4" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+		<Cursor>
+			<Cursor1 position="1122" topLine="15" />
+		</Cursor>
+		<Folding>
+			<Collapse line="80" />
+			<Collapse line="140" />
+			<Collapse line="188" />
+			<Collapse line="212" />
+			<Collapse line="280" />
+			<Collapse line="295" />
+			<Collapse line="369" />
+			<Collapse line="383" />
+			<Collapse line="405" />
+			<Collapse line="422" />
 		</Folding>
 	</File>
 	<File name="option.h" open="1" top="0" tabpos="5" split="0" active="1" splitpos="0" zoom_1="2" zoom_2="0">
@@ -32,22 +44,9 @@
 			<Cursor1 position="258" topLine="0" />
 		</Cursor>
 	</File>
-	<File name="option.c" open="1" top="0" tabpos="4" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
+	<File name="reg.h" open="1" top="0" tabpos="6" split="0" active="1" splitpos="0" zoom_1="3" zoom_2="0">
 		<Cursor>
-			<Cursor1 position="11778" topLine="113" />
+			<Cursor1 position="128" topLine="0" />
 		</Cursor>
-		<Folding>
-			<Collapse line="79" />
-			<Collapse line="139" />
-			<Collapse line="187" />
-			<Collapse line="211" />
-			<Collapse line="279" />
-			<Collapse line="294" />
-			<Collapse line="368" />
-			<Collapse line="382" />
-			<Collapse line="404" />
-			<Collapse line="421" />
-			<Collapse line="429" />
-		</Folding>
 	</File>
 </CodeBlocks_layout_file>
