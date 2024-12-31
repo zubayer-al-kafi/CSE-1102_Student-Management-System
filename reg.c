@@ -5,6 +5,7 @@
 #include "option.h"
 #include "reg.h"
 #include "mystruct.h"
+
 void scrolltext(char *str)
 {
     for(int i=0; i<strlen(str); i++)
@@ -18,7 +19,7 @@ void scrolltext(char *str)
 void takeinput(char ch[50])
 {
     fgets(ch,50,stdin);
-    ch[strlen(ch)-1]=0;
+    ch[strlen(ch)-1] = '\0';
 }
 
 FILE *fp, *fpid;

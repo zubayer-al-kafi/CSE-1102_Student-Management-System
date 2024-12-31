@@ -320,16 +320,20 @@ int elect_cr()
         int voters_count;
         printf("\nEnter the number of voters: ");
         scanf("%d", &voters_count);
-
+        getchar();
+        printf("\n\n");
         for (int i = 0; i < voters_count; i++)
         {
             char name[50];
-            printf("Vote %d: ", i + 1);
-            scanf("%s", name);
-
+            printf("\tVote %d: ", i + 1);
+            fflush(stdout);
+            takeinput(name);
+            printf("\033[F");//get back cursor to the previous line
+            printf("\033[K");//clear the line
             if (!vote(name))
             {
-                printf("Invalid vote.\n");
+                scrolltext("Invalid vote.");
+                i--;
             }
         }
 
@@ -361,7 +365,6 @@ int elect_cr()
 
     // Wait for user input to keep the console open
     printf("\nPress any key to continue...");
-    getchar(); // Consume the newline left by the last input
     getchar();
     return 0;
 }
@@ -474,8 +477,37 @@ int edittcrinfo(char *femail)
 
 int editstdinfo(char *fid)
 {
+    /*fp=fopen("stdinfo.txt","a")
+    while(fread(&s,sizeof(user),1,fp) != NULL)
+    {
+        if(strcmp(fid,s.roll)==0)
+        {
+            printf("\t\t\t---Student Registration---\n");
+            printf("\t\tEnter your name: \t");
+            takeinput(s.name);
+            printf("\t\tEnter your email: \t");
+            takeinput(s.email);
+            printf("\t\tEnter your number: \t");
+            takeinput(s.phone);
+            printf("\t\tEnter your roll: \t");
+            takeinput(s.roll);
+            printf("\t\tEnter your password: \t");
+            takepassword(s.password);
+            char pass2[50];
+            printf("\t\tConfirm your password: \t");
+            takepassword(pass2);
+            if (strcmp(s.password, pass2) != 0)
+            {
+                fclose(fp);
+                printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n");
+                Beep(523, 500);
+                Sleep(2000);
+                editstdinfo(fid);
+                return 0;
+            }
+        }
+    }*/
     printf("Press any key to continue...");
     getchar();
     return 0;
 }
-

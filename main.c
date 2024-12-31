@@ -41,7 +41,7 @@ int main()
             printf(".");
             Sleep(500);
         }
-        exit(0); //exiting the program
+        exit(0);//exiting the program
         break;
     default:
         scrolltext("\t\t\t---Invalid choice---\n");
