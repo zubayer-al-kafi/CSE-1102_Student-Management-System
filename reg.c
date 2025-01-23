@@ -1,10 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <windows.h>
-#include "option.h"
-#include "reg.h"
-#include "mystruct.h"
+#include "header.h"
 
 void scrolltext(char *str)
 {
@@ -26,11 +20,12 @@ FILE *fp, *fpid;
 int registration()
 {
     system("color 0B");
+    system("cls");
     int choice;
     printf("\t\t\t---Registration---\n");
     printf("\t\t1. Register as a student\n\t\t2. Register as a teacher\n");
     scrolltext("\n\t\tEnter your choice: ");
-    scanf_s("%d", &choice);
+    scanf("%d", &choice);
     getchar();
     switch (choice)
     {
@@ -55,7 +50,7 @@ int registration()
         {
             fclose(fp);
             printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n");
-            Beep(523, 500);
+            Beep(823, 500);
             Sleep(2000);
             registration();
             return 0;
@@ -161,14 +156,14 @@ int login()
                     printf("\033[1;32m\r\t\tLogin successful!\n\033[0m\n");
                     printf("\t\tPress any key to continue...\n");
                     getchar();
-                    options(id);
+                    options(id,password);
                     return 1;
                 }
                 else
                 {
                     fclose(fp);
                     scrolltext("\033[1;31m\n\t\tWrong Password.\n\033[0m\n");
-                    //printf("\033[1;31m\t\tWrong Password.\n\033[0m\n");
+                    Beep(823,500);
                     Sleep(2000);
                     login();
                 }
@@ -176,6 +171,7 @@ int login()
         }
         fclose(fp);
         printf("\033[1;31m\n\t\tUser not found.\n\033[0m");
+        Beep(823,500);
         printf("Press any key to continue...");
         getchar();
         login();
@@ -206,7 +202,7 @@ int login()
                     printf("\033[1;32m\r\t\tLogin successful!\n\033[0m\n");
                     printf("\t\tPress any key to continue...\n");
                     getchar();
-                    optiont(email);
+                    optiont(email,password);
                     return 1;
                 }
                 else
@@ -254,7 +250,7 @@ int takepassword(char pass[50])
         }
         else if (ch == 8)
         {
-            if (i > 0)
+            if (i >0)
             {
                 i--;
                 printf("\b \b");

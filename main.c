@@ -1,21 +1,16 @@
-//CSE 1102 Project
-//PROJECT NAME : STUDENT MANAGEMENT SYSTEM
-//          by
-//2307073,2307074,2307076
-//
+/*
+CSE 1102 Project
+PROJECT NAME : STUDENT MANAGEMENT SYSTEM
+            by
+  2307073,2307074,2307076
+*/
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <windows.h>
-#include <conio.h>
-#include "reg.h"
-#include "option.h"
-#include "mystruct.h"
+#include "header.h"
 
 int main()
 {
     system("color 0B");
+    system("cls");
     SetConsoleTitle("STUDENT MANAGEMENT SYSTEM");
     int opt;
     printf("\t\t\t---Welcome to the student management system---\n\n");
@@ -34,7 +29,7 @@ int main()
         login(); //calling the login function
         break;
     case 3:
-        system("cls");
+        //system("cls");
         scrolltext("\t\t\tExiting");
         for(int i=0; i<3; i++)
         {

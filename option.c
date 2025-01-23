@@ -1,16 +1,8 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <conio.h>
-#include <string.h>
-#include <windows.h>
-#include <stdbool.h>
-#include "option.h"
-#include "reg.h"
-#include "mystruct.h"
+#include "header.h"
 #define MAX 9
 
 FILE *fp;
-int options(char *fid)
+int options(char *fid, char *password)
 {
     system("color 0B");
     system("cls");
@@ -33,22 +25,23 @@ int options(char *fid)
                 printf("\t\tName: %s\n\t\tEmail: %s\n\t\tPhone: %s\n\t\tRoll: %s\n", s.name, s.email, s.phone, s.roll);
                 printf("\n\t\tPress any key to continue...");
                 getchar();
-                options(fid);
+                options(fid,password);
             }
         }
         fclose(fp);
-        options(fid);
+        options(fid,password);
         break;
     case 2:
-        editstdinfo(fid);
-        options(fid);
+        editstdinfo(fid,password);
+        options(fid,password);
         break;
     case 3:
-        options(fid);
+        dlt(fid,password);
+        main();
         break;
     case 4:
         course_reg(fid);
-        options(fid);
+        options(fid,password);
         break;
     case 5:
         printf("\n\t\tLogging out");
@@ -63,12 +56,12 @@ int options(char *fid)
     default:
         scrolltext("\t\t---Invalid choice---");
         Sleep(1000);
-        options(fid);
+        options(fid,password);
         return 0;
     }
 }
 
-int optiont(char *femail)
+int optiont(char *femail, char *password)
 {
     system("color 0B");
     system("cls");
@@ -94,31 +87,31 @@ int optiont(char *femail)
         }
         printf("\n\t\tPress any key to continue...");
         getchar();
-        optiont(femail);
+        optiont(femail,password);
         break;
 
     case 2:
-        edittcrinfo(femail);
-        optiont(femail);
+        edittcrinfo(femail,password);
+        optiont(femail,password);
         break;
 
     case 3:
         gpcal();
-        optiont(femail);
+        optiont(femail,password);
         break;
 
     case 4:
         cgpcal();
-        optiont(femail);
+        optiont(femail,password);
         break;
     case 5:
         elect_cr();
-        optiont(femail);
+        optiont(femail,password);
         break;
 
     case 6:
         searchstd();
-        optiont(femail);
+        optiont(femail,password);
         break;
 
     case 7:
@@ -134,7 +127,7 @@ int optiont(char *femail)
     default:
         scrolltext("\n\n\t\t---Invalid choice---\n\n");
         Sleep(2000);
-        optiont(femail);
+        optiont(femail,password);
     }
 }
 
@@ -287,7 +280,6 @@ typedef struct
 candidate candidates[MAX];
 int candidates_count;
 
-// Function prototypes
 bool vote(char name[]);
 void print_winner(void);
 bool check_tie(int most_votes);
@@ -455,58 +447,195 @@ int searchstd()
     return 0;
 }
 
-int edittcrinfo(char *femail)
+int edittcrinfo(char *femail, char *password)
 {
-    /*fp = fopen("teacherinfo.txt","r");
-    while (fscanf(fp, "%s %s %s", t.email, t.name, t.phone) != EOF)
+    FILE *ft = fopen("temp.txt", "w");
+    fp = fopen("teacherinfo.txt", "r");
+    if (!fp || !ft)
     {
-        if (strcmp(t.email, femail) == 0)
+        printf("Error opening files.\n");
+        return -1;
+    }
+    while (fread(&t, sizeof(user), 1, fp) == 1)
+    {
+        if (strcmp(femail, t.email) != 0)
         {
-            fclose(fp);
+            fwrite(&t, sizeof(user), 1, ft);
+        }
+        else
+        {
+            system("color 0B");
+            system("cls");
+            scrolltext("\t\t\t---Information Editing---\n");
+            printf("\n\t\tEnter your name: \t");
+            takeinput(t.name);
+            strcpy(femail,t.email);
+            printf("\t\tEnter your number: \t");
+            takeinput(t.phone);
+            printf("\t\tEnter your password: \t");
+            takepassword(t.password);
 
-            printf("")
-            printf("\t\tName: %s\n\t\tEmail: %s\n\t\tPhone: %s\n", t.name, t.email, t.phone);
-            break;
+            if (strcmp(password, t.password) == 0)
+            {
+                fwrite(&t, sizeof(user), 1, ft);
+                fclose(fp);
+                fclose(ft);
+                scrolltext("\033[1;32m\t\tSuccessfully updated...\n\033[0m\n");
+            }
+            else
+            {
+                fclose(fp);
+                fclose(ft);
+                scrolltext("\033[1;31m\n\t\tWrong Password.\n\033[0m\n");
+                Beep(823, 500);
+                Sleep(1000);
+                login();
+                return -1;
+            }
         }
     }
-    */
+    fclose(fp);
+    fclose(ft);
+    fp = fopen("teacherinfo.txt", "w");
+    ft = fopen("temp.txt", "r");
+
+    if (!fp || !ft)
+    {
+        printf("Error opening files for final write-back.\n");
+        return -1;
+    }
+
+    while (fread(&t, sizeof(user), 1, ft) == 1)
+    {
+        fwrite(&t, sizeof(user), 1, fp);
+    }
+    fclose(fp);
+    fclose(ft);
     printf("Press any key to continue...");
     getchar();
     return 0;
 }
 
-int editstdinfo(char *fid)
+int editstdinfo(char *fid, char *password)
 {
-    /*fp=fopen("stdinfo.txt","a")
-    while(fread(&s,sizeof(user),1,fp) != NULL)
+    FILE *ft = fopen("temp.txt", "w");
+    fp = fopen("stdinfo.txt", "r");
+
+    if (!fp || !ft)
     {
-        if(strcmp(fid,s.roll)==0)
+        printf("Error opening files.\n");
+        return -1;
+    }
+
+    while (fread(&s, sizeof(user), 1, fp) == 1)
+    {
+        if (strcmp(fid, s.roll) != 0)
         {
-            printf("\t\t\t---Student Registration---\n");
-            printf("\t\tEnter your name: \t");
+            fwrite(&s, sizeof(user), 1, ft);
+        }
+        else
+        {
+            system("color 0B");
+            system("cls");
+            scrolltext("\t\t\t---Information Editing---\n");
+            printf("\n\t\tEnter your name: \t");
             takeinput(s.name);
             printf("\t\tEnter your email: \t");
             takeinput(s.email);
             printf("\t\tEnter your number: \t");
             takeinput(s.phone);
-            printf("\t\tEnter your roll: \t");
-            takeinput(s.roll);
+            strcpy(s.roll, fid);
             printf("\t\tEnter your password: \t");
             takepassword(s.password);
-            char pass2[50];
-            printf("\t\tConfirm your password: \t");
-            takepassword(pass2);
-            if (strcmp(s.password, pass2) != 0)
+
+            if (strcmp(password, s.password) == 0)
+            {
+                fwrite(&s, sizeof(user), 1, ft);
+                fclose(fp);
+                fclose(ft);
+                scrolltext("\033[1;32m\t\tSuccessfully updated...\n\033[0m\n");
+            }
+            else
             {
                 fclose(fp);
-                printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n");
-                Beep(523, 500);
-                Sleep(2000);
-                editstdinfo(fid);
-                return 0;
+                fclose(ft);
+                scrolltext("\033[1;31m\n\t\tWrong Password.\n\033[0m\n");
+                Beep(823, 500);
+                Sleep(1000);
+                login();
+                return -1;
             }
         }
-    }*/
+    }
+    fclose(fp);
+    fclose(ft);
+    fp = fopen("stdinfo.txt", "w");
+    ft = fopen("temp.txt", "r");
+
+    if (!fp || !ft)
+    {
+        printf("Error opening files for final write-back.\n");
+        return -1;
+    }
+
+    while (fread(&s, sizeof(user), 1, ft) == 1)
+    {
+        fwrite(&s, sizeof(user), 1, fp);
+    }
+    fclose(fp);
+    fclose(ft);
+    printf("Press any key to continue...");
+    getchar();
+    return 0;
+}
+
+int dlt(char *fid, char *password)
+{
+    FILE *ft = fopen("temp.txt", "w");
+    fp = fopen("stdinfo.txt", "r");
+
+    if (!fp || !ft)
+    {
+        printf("Error opening files.\n");
+        return -1;
+    }
+    printf("\tEnter your password : ");
+    takepassword(s.password);
+    if(strcmp(s.password,password) != 0)
+    {
+        fclose(fp);
+        fclose(ft);
+        scrolltext("\033[1;31m\n\t\tWrong Password.\n\033[0m\n");
+        Beep(823, 500);
+        Sleep(1000);
+        login();
+        return -1;
+    }
+    while (fread(&s, sizeof(user), 1, fp) == 1)
+    {
+        if (strcmp(fid, s.roll) != 0)
+        {
+            fwrite(&s, sizeof(user), 1, ft);
+        }
+    }
+    fclose(fp);
+    fclose(ft);
+    fp = fopen("stdinfo.txt", "w");
+    ft = fopen("temp.txt", "r");
+
+    if (!fp || !ft)
+    {
+        printf("Error opening files for final write-back.\n");
+        return -1;
+    }
+
+    while (fread(&s, sizeof(user), 1, ft) == 1)
+    {
+        fwrite(&s, sizeof(user), 1, fp);
+    }
+    fclose(fp);
+    fclose(ft);
+    scrolltext("\tSuccessfully deleted.\n\n");
     printf("Press any key to continue...");
     getchar();
     return 0;
