@@ -34,8 +34,7 @@ int stdresult(char *fid)
         }
     }
     fclose(fp);
-    scrolltext("Press any key to continue...");
-    getchar();
+    system("pause");
     return 0;
 }
 
@@ -90,8 +89,7 @@ int gpcal()
             id, gp[0], gp[1], gp[2], gp[3], gp[4], gp[5], gp[6], gp[7], gpa);
 
     fclose(fp);
-    printf("Press any key to continue...");
-    getchar();
+    system("pause");
 
     return 0;
 }

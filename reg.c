@@ -51,7 +51,7 @@ int registration()
             fclose(fp);
             printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n");
             Beep(823, 500);
-            Sleep(2000);
+            Sleep(1000);
             registration();
             return 0;
         }
@@ -67,8 +67,7 @@ int registration()
             }
             printf("\033[1;32m\r\t\tRegistration successful!\n\033[0m\n");
             printf("\n\t\tYour ID is your roll number : %s\n", s.roll);
-            printf("\t\tPress any key to continue...\n");
-            getchar();
+            system("pause");
             login();
         }
         break;
@@ -106,8 +105,7 @@ int registration()
                 Sleep(500);
             }
             printf("\033[1;32m\r\t\tRegistration successful!\n\033[0m\n");
-            printf("\t\tPress any key to continue...\n");
-            getchar();
+            system("pause");
             login();
         }
         break;
@@ -154,8 +152,7 @@ int login()
                         Sleep(500);
                     }
                     printf("\033[1;32m\r\t\tLogin successful!\n\033[0m\n");
-                    printf("\t\tPress any key to continue...\n");
-                    getchar();
+                    system("pause");
                     options(id,password);
                     return 1;
                 }
@@ -172,8 +169,7 @@ int login()
         fclose(fp);
         printf("\033[1;31m\n\t\tUser not found.\n\033[0m");
         Beep(823,500);
-        printf("Press any key to continue...");
-        getchar();
+        system("pause");
         login();
         break;
     case 2:
@@ -200,8 +196,7 @@ int login()
                         Sleep(500);
                     }
                     printf("\033[1;32m\r\t\tLogin successful!\n\033[0m\n");
-                    printf("\t\tPress any key to continue...\n");
-                    getchar();
+                    system("pause");
                     optiont(email,password);
                     return 1;
                 }
@@ -226,6 +221,7 @@ int login()
         break;
     default:
         scrolltext("\t\t\t---Invalid choice---\n");
+        Sleep(1000);
         login();
         break;
     }

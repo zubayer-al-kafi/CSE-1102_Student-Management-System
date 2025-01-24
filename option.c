@@ -7,7 +7,7 @@ int options(char *fid, char *password)
     system("color 70");
     system("cls");
     int opt;
-    scrolltext("\t\t\t---Student Dashboard---\n\n");
+    printf("\t\t\t---Student Dashboard---\n\n");
     printf("\t\t1. View your information\n\t\t2. Edit your information\n\t\t3. Delete your account\n");
     printf("\t\t4. Course Registration\n\t\t5. View your result\n\t\t6. Logout\n");
     scrolltext("\n\t\tEnter your choice: ");
@@ -24,8 +24,7 @@ int options(char *fid, char *password)
             {
                 fclose(fp);
                 printf("\t\tName: %s\n\t\tEmail: %s\n\t\tPhone: %s\n\t\tRoll: %s\n", s.name, s.email, s.phone, s.roll);
-                printf("\n\t\tPress any key to continue...");
-                getchar();
+                system("pause");
                 options(fid,password);
             }
         }
@@ -71,7 +70,7 @@ int optiont(char *femail, char *password)
     system("color 70");
     system("cls");
     int opt;
-    scrolltext("\t\t\t---Teacher Dashboard---\n\n");
+    printf("\t\t\t---Teacher Dashboard---\n\n");
     printf("\t\t1. View your information\n\t\t2. Edit your information\n\t\t3. Calculate GPA\n");
     printf("\t\t4. Calculate CGPA\n\t\t5. Elect CR\n\t\t6. Search student\n\t\t7. Logout\n");
     scrolltext("\n\t\tEnter your choice: ");
@@ -91,8 +90,7 @@ int optiont(char *femail, char *password)
                 break;
             }
         }
-        printf("\n\t\tPress any key to continue...");
-        getchar();
+        system("pause");
         optiont(femail,password);
         break;
 
@@ -132,7 +130,7 @@ int optiont(char *femail, char *password)
 
     default:
         scrolltext("\n\n\t\t---Invalid choice---\n\n");
-        Sleep(2000);
+        Sleep(1000);
         optiont(femail,password);
     }
 }
@@ -155,8 +153,7 @@ int cgpcal()
     for (int i = 0; i < n; i++)
         sum += gp[i];
     printf("The CGPA is : %.2f\n", sum / n);
-    printf("\n\t\tPress any key to continue...");
-    getchar();
+    system("pause");
     return 0;
 }
 
@@ -184,8 +181,7 @@ int elect_cr()
     if (candidates_count <= 1 || candidates_count > MAX)
     {
         printf("\t\tInvalid number of candidates. Maximum is %d.\n", MAX);
-        printf("\n\t\tPress any key to continue...");
-        getchar();
+        system("pause");
         return 1;
     }
 
@@ -245,8 +241,7 @@ int elect_cr()
     }
 
     // Wait for user input to keep the console open
-    printf("\nPress any key to continue...");
-    getchar();
+    system("pause");
     return 0;
 }
 
@@ -359,9 +354,7 @@ int searchstd()
         }
     }
     fclose(fp);
-    //scrolltext("\t\tSorry, there is no student with this ID.");
-    scrolltext("\n\nPress any key to continue...");
-    getchar();
+    system("pause");
     return 0;
 }
 
@@ -429,8 +422,7 @@ int edittcrinfo(char *femail, char *password)
     }
     fclose(fp);
     fclose(ft);
-    printf("Press any key to continue...");
-    getchar();
+    system("pause");
     return 0;
 }
 
@@ -502,8 +494,7 @@ int editstdinfo(char *fid, char *password)
     }
     fclose(fp);
     fclose(ft);
-    printf("Press any key to continue...");
-    getchar();
+    system("pause");
     return 0;
 }
 
@@ -554,8 +545,7 @@ int dlt(char *fid, char *password)
     fclose(fp);
     fclose(ft);
     scrolltext("\tSuccessfully deleted.\n\n");
-    printf("Press any key to continue...");
-    getchar();
+    system("pause");
     return 0;
 }
 
@@ -592,8 +582,7 @@ int course_reg(char *fid)
         if (strcmp(check,fcheck)==0)
         {
             scrolltext("\n\t\tYou are already registered for this semester.\n");
-            printf("\n\t\tPress any key to continue...");
-            getchar();
+            system("pause");
             fclose(fp);
             return 0;
         }
@@ -610,16 +599,14 @@ int course_reg(char *fid)
             fprintf(fp,"%s %s\n",fid,sem);
             fclose(fp);
             printf("\n\t\tID %s is registered for %s\n", fid, fsem);
-            printf("\n\t\tPress any key to continue...");
-            getchar();
+            system("pause");
             fclose(fp);
             return 0;
         }
     }
     fclose(fp);
     scrolltext("\n\t\tSomething went wrong\n");
-    printf("\n\t\tPress any key to continue...");
-    getchar();
+    system("pause");
 
     return 0;
 }

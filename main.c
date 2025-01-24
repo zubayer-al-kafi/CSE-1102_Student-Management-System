@@ -29,7 +29,6 @@ int main()
         login(); //calling the login function
         break;
     case 3:
-        //system("cls");
         scrolltext("\t\t\tExiting");
         for(int i=0; i<3; i++)
         {
@@ -40,8 +39,10 @@ int main()
         break;
     default:
         scrolltext("\t\t\t---Invalid choice---\n");
+        Beep(800,500);
         Sleep(1000);
         system("cls");
+
         main();
         break;
     }

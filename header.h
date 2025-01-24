@@ -6,9 +6,9 @@
 #include <string.h>
 #include <windows.h>
 #include <conio.h>
-
 #include "reg.h"
 #include "option.h"
 #include "mystruct.h"
+#include "result.h"
 
 #endif // HEADER_H
