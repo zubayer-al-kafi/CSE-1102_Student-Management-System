@@ -19,7 +19,7 @@ void takeinput(char ch[50])
 FILE *fp, *fpid;
 int registration()
 {
-    system("color 0B");
+    system("color 70");
     system("cls");
     int choice;
     printf("\t\t\t---Registration---\n");
@@ -120,7 +120,7 @@ int registration()
 
 int login()
 {
-    system("color 0B");
+    system("color 70");
     system("cls");
     int choice;
     printf("\t\t\t---Login---\n");

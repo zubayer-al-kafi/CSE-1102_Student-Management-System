@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1737618420 source:d:\programming\c\lab project\main.c
+1737714393 source:d:\programming\c\lab project\main.c
 	"header.h"
 
 1735465215 d:\programming\c\lab project\reg.h
@@ -7,21 +7,13 @@
 1737620710 source:d:\programming\c\lab project\reg.c
 	"header.h"
 
-1737620241 d:\programming\c\lab project\option.h
+1737713697 d:\programming\c\lab project\option.h
 	<stdbool.h>
 
 1735463542 d:\programming\c\lab project\mystruct.h
 
-1737620630 source:d:\programming\c\lab project\option.c
-	<stdio.h>
-	<stdlib.h>
-	<conio.h>
-	<string.h>
-	<windows.h>
-	<stdbool.h>
-	"option.h"
-	"reg.h"
-	"mystruct.h"
+1737714542 source:d:\programming\c\lab project\option.c
+	"header.h"
 
 1737620677 d:\programming\c\lab project\header.h
 	<stdio.h>
@@ -32,4 +24,7 @@
 	"reg.h"
 	"option.h"
 	"mystruct.h"
+
+1737713723 source:d:\programming\c\lab project\result.c
+	"header.h"
 

@@ -4,7 +4,7 @@
 #include <stdbool.h>
 int options(char *fid, char *password);
 int optiont(char *femail, char *password);
-int gpcal();
+//int gpcal();
 int cgpcal();
 int elect_cr();
 int course_reg(char *fid);

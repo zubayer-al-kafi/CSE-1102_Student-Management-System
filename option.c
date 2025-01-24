@@ -4,11 +4,11 @@
 FILE *fp;
 int options(char *fid, char *password)
 {
-    system("color 0B");
+    system("color 70");
     system("cls");
     int opt;
     printf("\t\t1. View your information\n\t\t2. Edit your information\n\t\t3. Delete your account\n");
-    printf("\t\t4. Course Registration\n\t\t5. Logout\n");
+    printf("\t\t4. Course Registration\n\t\t5. View your result\n\t\t6. Logout\n");
     scrolltext("\n\t\tEnter your choice: ");
     scanf("%d", &opt);
     getchar();
@@ -44,6 +44,10 @@ int options(char *fid, char *password)
         options(fid,password);
         break;
     case 5:
+        stdresult(fid);
+        options(fid,password);
+        break;
+    case 6:
         printf("\n\t\tLogging out");
         for(int i=0; i<3; i++)
         {
@@ -63,7 +67,7 @@ int options(char *fid, char *password)
 
 int optiont(char *femail, char *password)
 {
-    system("color 0B");
+    system("color 70");
     system("cls");
     int opt;
     printf("\t\t1. View your information\n\t\t2. Edit your information\n\t\t3. Calculate GPA\n");
@@ -131,54 +135,6 @@ int optiont(char *femail, char *password)
     }
 }
 
-int gpcal()
-{
-    printf("\t\tGPA Calculator\n\n");
-    int courses;
-    printf("Enter the total number of courses: ");
-    scanf("%d", &courses);
-    float gp[courses][2];
-    printf("Enter Grade point and CREDIT for each course: \n");
-    printf("READ CARFULLY : GP and Credit have to be space separated. Otherwise it'll produce error.\n");
-    printf("\n\t\tGP- Credit\n");
-    printf("---------------------------------------------------------\n");
-    for (int i = 0; i < courses; i++)
-    {
-        printf("\t\t");
-        scanf("%f %f", &gp[i][0], &gp[i][1]);
-        getchar();
-        if (gp[i][0] > 4)
-        {
-            scrolltext("Invalid input\n");
-            printf("Press any key to continue...");
-            getchar();
-            return 0;
-        }
-    }
-    float total_credit = 0;
-    for (int i = 0; i < courses; i++)
-    {
-        total_credit += gp[i][1];
-    }
-    float score = 0;
-    for (int i = 0; i < courses; i++)
-    {
-        score += gp[i][0] * gp[i][1];
-    }
-    float cg;
-    cg = (float)score / (float)total_credit;
-    if (cg > 4)
-    {
-        scrolltext("Please give input carefully.\n");
-    }
-    else
-        printf("THE GPA IS %.2f\n\n", cg);
-
-    printf("Press any key to continue...");
-    getchar();
-    return 0;
-}
-
 int cgpcal()
 {
     int n;
@@ -201,75 +157,6 @@ int cgpcal()
     getchar();
     return 0;
 }
-
-
-int course_reg(char *fid)
-{
-    system("cls");
-    system("color 0B");
-    char sem[8], fsem[8];
-    printf("\t\tCourse Registration for ID : %s\n\n", fid);
-    printf("Enter the semester (Example: CSE 1-1): ");
-    fgets(sem, sizeof(sem), stdin);
-    sem[strcspn(sem, "\n")] = 0; // Remove the newline character
-    getchar();
-
-    //now add id and sem with a space between them
-    char check[20];
-    int j=0;
-    for(int i=0; i<strlen(fid); i++)
-    {
-        check[j++]=fid[i];
-    }
-    check[j++]=' ';
-    for(int i=0; i<strlen(sem); i++)
-    {
-        check[j++]=sem[i];
-    }
-    check[j++]='\n';
-    check[j]='\0';
-
-    fp=fopen("reginfo.txt","r");//check if it is already registered or not
-    char fcheck[20];
-    while (fgets(fcheck,sizeof(fcheck),fp) != NULL)
-    {
-        if (strcmp(check,fcheck)==0)
-        {
-            scrolltext("\n\t\tYou are already registered for this semester.\n");
-            printf("\n\t\tPress any key to continue...");
-            getchar();
-            fclose(fp);
-            return 0;
-        }
-
-    }
-    fclose(fp);
-
-    fp = fopen("semester.txt", "r");
-    while (fgets(fsem, sizeof(fsem), fp) != NULL)
-    {
-        fsem[strcspn(fsem, "\n")] = 0; // Remove the newline character
-        if (strcmp(sem, fsem) == 0)
-        {
-            fclose(fp);
-            fp = fopen("reginfo.txt","a");
-            fprintf(fp,"%s %s\n",fid,sem);
-            fclose(fp);
-            printf("\n\t\tID %s is registered for %s\n", fid, fsem);
-            printf("\n\t\tPress any key to continue...");
-            getchar();
-            fclose(fp);
-            return 0;
-        }
-    }
-    fclose(fp);
-    scrolltext("\n\t\tSomething went wrong\n");
-    printf("\n\t\tPress any key to continue...");
-    getchar();
-
-    return 0;
-}
-
 
 typedef struct
 {
@@ -436,13 +323,42 @@ int searchstd()
         if (strcmp(s.roll, roll) == 0)
         {
             printf("\t\tName: %s\n\t\tEmail: %s\n\t\tPhone: %s\n\t\tRoll: %s\n", s.name, s.email, s.phone, s.roll);
-            printf("\n\nPress any key to continue...");
-            getchar();
-            return 0;
+            break;
         }
     }
-    printf("\t\tSorry, there is no student with this ID.");
-    printf("\n\nPress any key to continue...");
+    fclose(fp);
+    char id[8];
+    printf("\n\t\t\tResult in 1-1 of %s\n\n",s.roll);
+    fp = fopen("gpa.txt", "r");
+
+    if (fp == NULL)
+    {
+        perror("Error opening file");
+        return 1;
+    }
+
+    float gp[8], gpa;
+    while (fscanf(fp, "%s %f %f %f %f %f %f %f %f %f",
+                  id, &gp[0], &gp[1], &gp[2], &gp[3],
+                  &gp[4], &gp[5], &gp[6], &gp[7], &gpa) != EOF)
+    {
+        if (strcmp(s.roll, id) == 0)
+        {
+            printf("\t\tCSE  1101 : %.2f\n", gp[0]);
+            printf("\t\tCSE  1102 : %.2f\n", gp[1]);
+            printf("\t\tCSE  1107 : %.2f\n", gp[2]);
+            printf("\t\tPHY  1107 : %.2f\n", gp[3]);
+            printf("\t\tPHY  1108 : %.2f\n", gp[4]);
+            printf("\t\tMATH 1107 : %.2f\n", gp[5]);
+            printf("\t\tHUM  1107 : %.2f\n", gp[6]);
+            printf("\t\tHUM  1108 : %.2f\n\n", gp[7]);
+            printf("\t\tGPA       : %.2f\n", gpa);
+            break;
+        }
+    }
+    fclose(fp);
+    //scrolltext("\t\tSorry, there is no student with this ID.");
+    scrolltext("\n\nPress any key to continue...");
     getchar();
     return 0;
 }
@@ -638,5 +554,70 @@ int dlt(char *fid, char *password)
     scrolltext("\tSuccessfully deleted.\n\n");
     printf("Press any key to continue...");
     getchar();
+    return 0;
+}
+
+int course_reg(char *fid)
+{
+    system("cls");
+    system("color 70");
+    char sem[8], fsem[8];
+    printf("\t\tCourse Registration for ID : %s\n\n", fid);
+    printf("Enter the semester (Example: CSE 1-1): ");
+    fgets(sem, sizeof(sem), stdin);
+    sem[strcspn(sem, "\n")] = 0; // Remove the newline character
+    getchar();
+
+    //now add id and sem with a space between them
+    char check[20];
+    int j=0;
+    for(int i=0; i<strlen(fid); i++)
+    {
+        check[j++]=fid[i];
+    }
+    check[j++]=' ';
+    for(int i=0; i<strlen(sem); i++)
+    {
+        check[j++]=sem[i];
+    }
+    check[j++]='\n';
+    check[j]='\0';
+
+    fp=fopen("reginfo.txt","r");//check if it is already registered or not
+    char fcheck[20];
+    while (fgets(fcheck,sizeof(fcheck),fp) != NULL)
+    {
+        if (strcmp(check,fcheck)==0)
+        {
+            scrolltext("\n\t\tYou are already registered for this semester.\n");
+            printf("\n\t\tPress any key to continue...");
+            getchar();
+            fclose(fp);
+            return 0;
+        }
+    }
+    fclose(fp);
+    fp = fopen("semester.txt", "r");
+    while (fgets(fsem, sizeof(fsem), fp) != NULL)
+    {
+        fsem[strcspn(fsem, "\n")] = 0; // Remove the newline character
+        if (strcmp(sem, fsem) == 0)
+        {
+            fclose(fp);
+            fp = fopen("reginfo.txt","a");
+            fprintf(fp,"%s %s\n",fid,sem);
+            fclose(fp);
+            printf("\n\t\tID %s is registered for %s\n", fid, fsem);
+            printf("\n\t\tPress any key to continue...");
+            getchar();
+            fclose(fp);
+            return 0;
+        }
+    }
+    fclose(fp);
+    scrolltext("\n\t\tSomething went wrong\n");
+    printf("\n\t\tPress any key to continue...");
+    getchar();
+
     return 0;
 }

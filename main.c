@@ -9,7 +9,7 @@ PROJECT NAME : STUDENT MANAGEMENT SYSTEM
 
 int main()
 {
-    system("color 0B");
+    system("color 70");
     system("cls");
     SetConsoleTitle("STUDENT MANAGEMENT SYSTEM");
     int opt;
