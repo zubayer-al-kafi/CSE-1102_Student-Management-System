@@ -44,6 +44,10 @@
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="reg.h" />
+		<Unit filename="result.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="result.h" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>

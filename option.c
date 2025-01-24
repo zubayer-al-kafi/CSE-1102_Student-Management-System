@@ -7,6 +7,7 @@ int options(char *fid, char *password)
     system("color 70");
     system("cls");
     int opt;
+    scrolltext("\t\t\t---Student Dashboard---\n\n");
     printf("\t\t1. View your information\n\t\t2. Edit your information\n\t\t3. Delete your account\n");
     printf("\t\t4. Course Registration\n\t\t5. View your result\n\t\t6. Logout\n");
     scrolltext("\n\t\tEnter your choice: ");
@@ -70,6 +71,7 @@ int optiont(char *femail, char *password)
     system("color 70");
     system("cls");
     int opt;
+    scrolltext("\t\t\t---Teacher Dashboard---\n\n");
     printf("\t\t1. View your information\n\t\t2. Edit your information\n\t\t3. Calculate GPA\n");
     printf("\t\t4. Calculate CGPA\n\t\t5. Elect CR\n\t\t6. Search student\n\t\t7. Logout\n");
     scrolltext("\n\t\tEnter your choice: ");
