@@ -3,4 +3,4 @@
 
 int stdresult(char *fid);
 int gpcal();
-#endif // RESULT_H
+#endif

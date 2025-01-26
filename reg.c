@@ -23,7 +23,7 @@ int registration()
     system("cls");
     int choice;
     printf("\t\t\t---Registration---\n");
-    printf("\t\t1. Register as a student\n\t\t2. Register as a teacher\n");
+    printf("\t\t1. Register as a student\n\t\t2. Register as a teacher\n\t\t3. Go back\n");
     scrolltext("\n\t\tEnter your choice: ");
     scanf("%d", &choice);
     getchar();
@@ -90,8 +90,8 @@ int registration()
             printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n");
             fclose(fp);
             Beep(523, 500);
-            Sleep(2000);
-            login();
+            Sleep(1000);
+            registration();
             return 0;
         }
         else
@@ -108,6 +108,9 @@ int registration()
             system("pause");
             login();
         }
+        break;
+    case 3:
+        main();
         break;
     default:
         printf("\n\t\t\t---Invalid choice---\n");
@@ -163,6 +166,7 @@ int login()
                     Beep(823,500);
                     Sleep(2000);
                     login();
+                    return 0;
                 }
             }
         }
@@ -204,7 +208,6 @@ int login()
                 {
                     fclose(fp);
                     scrolltext("\033[1;31m\t\tWrong Password.\n\033[0m\n");
-                    //printf("Wrong Password.\n");
                     Sleep(2000);
                     return 0;
                 }

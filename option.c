@@ -18,22 +18,22 @@ int options(char *fid, char *password)
     case 1:
         printf("\t\t\t---Your information---\n");
         fp = fopen("stdinfo.txt", "r");
-        while (fread(&s,sizeof(user),1,fp) != NULL)
+        while (fread(&s,sizeof(user),1,fp) != 0)
         {
             if (strcmp(fid,s.roll) == 0)
             {
                 fclose(fp);
                 printf("\t\tName: %s\n\t\tEmail: %s\n\t\tPhone: %s\n\t\tRoll: %s\n", s.name, s.email, s.phone, s.roll);
-                system("pause");
-                options(fid,password);
+                break;
             }
         }
         fclose(fp);
+        system("pause");
         options(fid,password);
         break;
     case 2:
         editstdinfo(fid,password);
-        options(fid,password);
+        options(fid,password); // return back to options
         break;
     case 3:
         dlt(fid,password);
@@ -139,40 +139,40 @@ int cgpcal()
 {
     int n;
     printf("Enter the number of semesters: ");
-    if (scanf("%d", &n) != 1 || n <= 0)
+    scanf("%d", &n);
+
+    if (n <= 0)
     {
-        printf("Invalid input! Please enter a positive integer.\n");
-        return -1;
+        printf("Invalid input! Please enter a positive number of semesters.\n");
+        return 1;
     }
 
-    float *gp = (float *)malloc(n * sizeof(float));
-    if (gp == NULL)
+    float *gpas = (float *)malloc(n * sizeof(float));
+    if (gpas == NULL)
     {
         printf("Memory allocation failed!\n");
-        return -1;
-    }
-    system("cls");
-    printf("\t\t\tCGPA Calculator\n\n");
-    for (int i = 0; i < n; i++)
-    {
-        printf("\t\tEnter GPA of semester %d: ", i + 1);
-        if (scanf("%f", &gp[i]) != 1 || gp[i] < 0 || gp[i] > 4.0)
-        {
-            printf("\t\tInvalid GPA! Please enter a number between 0.0 and 4.0.\n");
-            free(gp);
-            return -1;
-        }
+        return 1;
     }
 
     float sum = 0;
+
     for (int i = 0; i < n; i++)
     {
-        sum += gp[i];
+        printf("Enter GPA for semester %d: ", i + 1);
+        scanf("%f", &gpas[i]);
+        if (gpas[i] < 0 || gpas[i] > 4.0)
+        {
+            printf("Invalid GPA! Please enter a value between 0.0 and 4.0.\n");
+            free(gpas);
+            return 1;
+        }
+        sum += gpas[i];
     }
 
-    printf("\t\tThe CGPA is: %.2f\n", sum / n);
-    free(gp);
-    system("pause");
+    float cgpa = sum / n;
+    printf("Your CGPA is: %.2f\n", cgpa);
+    free(gpas);
+
     return 0;
 }
 
@@ -185,10 +185,6 @@ typedef struct
 candidate candidates[MAX];
 int candidates_count;
 
-bool vote(char name[]);
-void print_winner(void);
-bool check_tie(int most_votes);
-void reset_votes(void);
 
 int elect_cr()
 {
@@ -233,7 +229,6 @@ int elect_cr()
             }
         }
 
-        // Determine the highest votes
         int most_votes = 0;
         for (int i = 0; i < candidates_count; i++)
         {
@@ -302,7 +297,6 @@ void print_winner(void)
 bool check_tie(int most_votes)
 {
     int tie_count = 0;
-
     for (int i = 0; i < candidates_count; i++)
     {
         if (candidates[i].votes == most_votes)
@@ -310,11 +304,8 @@ bool check_tie(int most_votes)
             tie_count++;
         }
     }
-
-    // A tie occurs if more than one candidate has the highest votes
     return tie_count > 1;
 }
-
 
 void reset_votes(void)
 {
@@ -323,6 +314,7 @@ void reset_votes(void)
         candidates[i].votes = 0;
     }
 }
+
 
 int searchstd()
 {
@@ -340,7 +332,7 @@ int searchstd()
     }
 
     int found = 0;
-    while (fread(&s, sizeof(user), 1, fp) != 0)
+    while (fread(&s, sizeof(user), 1, fp) != NULL)
     {
         if (strcmp(s.roll, roll) == 0)
         {
@@ -370,7 +362,7 @@ int searchstd()
     found = 0;
     while (fscanf(fp, "%s %f %f %f %f %f %f %f %f %f",
                   id, &gp[0], &gp[1], &gp[2], &gp[3],
-                  &gp[4], &gp[5], &gp[6], &gp[7], &gpa) == 10)
+                  &gp[4], &gp[5], &gp[6], &gp[7], &gpa) != EOF)
     {
         if (strcmp(s.roll, id) == 0)
         {
@@ -390,12 +382,11 @@ int searchstd()
     fclose(fp);
     if (!found)
     {
-        printf("\n\t\tError : Student with ID '%s' not found\n", s.roll);
+        printf("\n\t\tError : Result not found\n");
     }
     system("pause");
     return 0;
 }
-
 
 int edittcrinfo(char *femail, char *password)
 {
@@ -414,7 +405,7 @@ int edittcrinfo(char *femail, char *password)
         }
         else
         {
-            system("color 0B");
+            system("color 70");
             system("cls");
             scrolltext("\t\t\t---Information Editing---\n");
             printf("\n\t\tEnter your name: \t");
@@ -475,7 +466,6 @@ int editstdinfo(char *fid, char *password)
         printf("Error opening files.\n");
         return -1;
     }
-
     while (fread(&s, sizeof(user), 1, fp) == 1)
     {
         if (strcmp(fid, s.roll) != 0)
@@ -595,11 +585,9 @@ int course_reg(char *fid)
     char sem[8], fsem[8];
     printf("\t\tCourse Registration for ID : %s\n\n", fid);
     printf("Enter the semester (Example: CSE 1-1): ");
-    fgets(sem, sizeof(sem), stdin);
-    sem[strcspn(sem, "\n")] = 0; // Remove the newline character
-    getchar();
+    takeinput(sem);
 
-    //now add id and sem with a space between them
+
     char check[20];
     int j=0;
     for(int i=0; i<strlen(fid); i++)
@@ -630,7 +618,7 @@ int course_reg(char *fid)
     fp = fopen("semester.txt", "r");
     while (fgets(fsem, sizeof(fsem), fp) != NULL)
     {
-        fsem[strcspn(fsem, "\n")] = 0; // Remove the newline character
+        fsem[strcspn(fsem, "\n")] = '\0';
         if (strcmp(sem, fsem) == 0)
         {
             fclose(fp);

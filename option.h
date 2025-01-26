@@ -13,5 +13,9 @@ int searchstd();
 int editstdinfo(char *fid,char *password);
 int edittcrinfo(char *femail, char *password);
 int dlt(char *fid, char *password);
+bool vote(char name[]);
+void print_winner(void);
+bool check_tie(int most_votes);
+void reset_votes(void);
 
 #endif

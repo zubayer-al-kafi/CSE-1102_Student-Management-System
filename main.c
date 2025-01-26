@@ -13,7 +13,7 @@ int main()
     system("cls");
     SetConsoleTitle("STUDENT MANAGEMENT SYSTEM");
     int opt;
-    printf("\t\t\t---Welcome to the student management system---\n\n");
+    printf("\t\t\t---Welcome to the Student Management System---\n\n");
     printf("\t\t1. Registration\n\t\t2. Login\n\t\t3. Exit\n");
     scrolltext("\n\t\tEnter your choice: ");
     scanf("%d", &opt);
