@@ -1,8 +1,8 @@
 /*
-CSE 1102 Project
-PROJECT NAME : STUDENT MANAGEMENT SYSTEM
+    CSE 1102 Project
+    PROJECT NAME : STUDENT MANAGEMENT SYSTEM
             by
-  2307073,2307074,2307076
+    2307073,2307074,2307076
 */
 
 #include "header.h"
@@ -40,7 +40,7 @@ int main()
     default:
         scrolltext("\t\t\t---Invalid choice---\n");
         Beep(800,500);
-        Sleep(1000);
+        Sleep(500);
         system("cls");
 
         main();

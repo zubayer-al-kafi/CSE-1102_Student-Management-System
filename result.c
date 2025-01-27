@@ -15,6 +15,7 @@ int stdresult(char *fid)
     }
 
     float gp[8], gpa;
+    int found = 0;
     while (fscanf(fp, "%s %f %f %f %f %f %f %f %f %f",
                   id, &gp[0], &gp[1], &gp[2], &gp[3],
                   &gp[4], &gp[5], &gp[6], &gp[7], &gpa) != EOF)
@@ -30,8 +31,14 @@ int stdresult(char *fid)
             printf("\tHUM  1107 : %.2f\n", gp[6]);
             printf("\tHUM  1108 : %.2f\n\n", gp[7]);
             printf("\tGPA       : %.2f\n", gpa);
+            found = 1;
             break;
         }
+    }
+    if(found == 0)
+    {
+        printf("\tResult not found.\n");
+        Beep(800,500);
     }
     fclose(fp);
     system("pause");
@@ -41,14 +48,12 @@ int stdresult(char *fid)
 int gpcal()
 {
     system("cls");
-    printf("\t\tGPA Calculator\n\n");
+    printf("\t\tInsert Student's Result\n\n");
 
-    // Input student ID
     char id[8];
     printf("Enter the ID of student: ");
     takeinput(id);
 
-    // Course credits and names
     float credits[] = {3, 1.5, 3, 3, 1.5, 3, 3, 0.75};
     char *courseCodes[] =
     {
@@ -60,7 +65,6 @@ int gpcal()
     float sum = 0, gpa, gp[8];
     int numCourses = 8;
 
-    // Input grades and calculate weighted sum
     for (int i = 0; i < numCourses; i++)
     {
         printf("\t%s : ", courseCodes[i]);

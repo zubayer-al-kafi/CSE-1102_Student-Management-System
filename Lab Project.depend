@@ -1,10 +1,10 @@
 # depslib dependency file v1.0
-1737919848 source:d:\programming\c\lab project\main.c
+1737953620 source:d:\programming\c\lab project\main.c
 	"header.h"
 
 1735465215 d:\programming\c\lab project\reg.h
 
-1737928466 source:d:\programming\c\lab project\reg.c
+1737953751 source:d:\programming\c\lab project\reg.c
 	"header.h"
 
 1737927098 d:\programming\c\lab project\option.h
@@ -12,7 +12,7 @@
 
 1735463542 d:\programming\c\lab project\mystruct.h
 
-1737928204 source:d:\programming\c\lab project\option.c
+1737954802 source:d:\programming\c\lab project\option.c
 	"header.h"
 
 1737730594 d:\programming\c\lab project\header.h
@@ -26,7 +26,7 @@
 	"mystruct.h"
 	"result.h"
 
-1737732248 source:d:\programming\c\lab project\result.c
+1737954330 source:d:\programming\c\lab project\result.c
 	"header.h"
 
 1737928249 d:\programming\c\lab project\result.h

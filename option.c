@@ -238,23 +238,18 @@ int elect_cr()
             }
         }
 
-        // Check if there is a tie
         if (check_tie(most_votes))
         {
             printf("\nThere is a tie. A re-election is required among the tied candidates.\n");
-
-            // Retain only the tied candidates and reset their votes
             reset_votes();
         }
         else
         {
-            // Print the winner(s) and exit the loop
             print_winner();
             break;
         }
     }
 
-    // Wait for user input to keep the console open
     system("pause");
     return 0;
 }
@@ -380,7 +375,7 @@ int searchstd()
         }
     }
     fclose(fp);
-    if (!found)
+    if (found == 0)
     {
         printf("\n\t\tError : Result not found\n");
     }
@@ -392,9 +387,9 @@ int edittcrinfo(char *femail, char *password)
 {
     FILE *ft = fopen("temp.txt", "w");
     fp = fopen("teacherinfo.txt", "r");
-    if (!fp || !ft)
+    if (fp == NULL || ft == NULL)
     {
-        printf("Error opening files.\n");
+        perror("Error opening files");
         return -1;
     }
     while (fread(&t, sizeof(user), 1, fp) == 1)
@@ -440,9 +435,9 @@ int edittcrinfo(char *femail, char *password)
     fp = fopen("teacherinfo.txt", "w");
     ft = fopen("temp.txt", "r");
 
-    if (!fp || !ft)
+    if (fp == NULL || ft == NULL)
     {
-        printf("Error opening files for final write-back.\n");
+        perror("Error opening file");
         return -1;
     }
 
@@ -461,9 +456,9 @@ int editstdinfo(char *fid, char *password)
     FILE *ft = fopen("temp.txt", "w");
     fp = fopen("stdinfo.txt", "r");
 
-    if (!fp || !ft)
+    if (fp == NULL || ft == NULL)
     {
-        printf("Error opening files.\n");
+        perror("Error opening files");
         return -1;
     }
     while (fread(&s, sizeof(user), 1, fp) == 1)
@@ -499,8 +494,8 @@ int editstdinfo(char *fid, char *password)
                 fclose(fp);
                 fclose(ft);
                 scrolltext("\033[1;31m\n\t\tWrong Password.\n\033[0m\n");
-                Beep(823, 500);
-                Sleep(1000);
+                Beep(800, 500);
+                Sleep(500);
                 login();
                 return -1;
             }
@@ -511,9 +506,9 @@ int editstdinfo(char *fid, char *password)
     fp = fopen("stdinfo.txt", "w");
     ft = fopen("temp.txt", "r");
 
-    if (!fp || !ft)
+    if (fp == NULL || ft == NULL)
     {
-        printf("Error opening files for final write-back.\n");
+        perror("Error opening file");
         return -1;
     }
 
@@ -532,9 +527,9 @@ int dlt(char *fid, char *password)
     FILE *ft = fopen("temp.txt", "w");
     fp = fopen("stdinfo.txt", "r");
 
-    if (!fp || !ft)
+    if (fp == NULL || ft == NULL)
     {
-        printf("Error opening files.\n");
+        perror("Error opening file");
         return -1;
     }
     printf("\tEnter your password : ");
@@ -549,7 +544,7 @@ int dlt(char *fid, char *password)
         login();
         return -1;
     }
-    while (fread(&s, sizeof(user), 1, fp) == 1)
+    while (fread(&s, sizeof(user), 1, fp) != NULL)
     {
         if (strcmp(fid, s.roll) != 0)
         {
@@ -561,9 +556,9 @@ int dlt(char *fid, char *password)
     fp = fopen("stdinfo.txt", "w");
     ft = fopen("temp.txt", "r");
 
-    if (!fp || !ft)
+    if (fp == NULL || ft == NULL)
     {
-        printf("Error opening files for final write-back.\n");
+        perror("Error opening file");
         return -1;
     }
 
@@ -602,7 +597,7 @@ int course_reg(char *fid)
     check[j++]='\n';
     check[j]='\0';
 
-    fp=fopen("reginfo.txt","r");//check if it is already registered or not
+    fp=fopen("reginfo.txt","r");//checking if it is already registered or not
     char fcheck[20];
     while (fgets(fcheck,sizeof(fcheck),fp) != NULL)
     {

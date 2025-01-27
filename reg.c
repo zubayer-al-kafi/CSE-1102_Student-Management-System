@@ -50,8 +50,8 @@ int registration()
         {
             fclose(fp);
             printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n");
-            Beep(823, 500);
-            Sleep(1000);
+            Beep(800, 500);
+            Sleep(500);
             registration();
             return 0;
         }
@@ -89,8 +89,8 @@ int registration()
         {
             printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n");
             fclose(fp);
-            Beep(523, 500);
-            Sleep(1000);
+            Beep(800, 500);
+            Sleep(500);
             registration();
             return 0;
         }
@@ -163,8 +163,8 @@ int login()
                 {
                     fclose(fp);
                     scrolltext("\033[1;31m\n\t\tWrong Password.\n\033[0m\n");
-                    Beep(823,500);
-                    Sleep(2000);
+                    Beep(800,500);
+                    Sleep(500);
                     login();
                     return 0;
                 }
@@ -172,7 +172,7 @@ int login()
         }
         fclose(fp);
         printf("\033[1;31m\n\t\tUser not found.\n\033[0m");
-        Beep(823,500);
+        Beep(800,500);
         system("pause");
         login();
         break;
@@ -208,7 +208,8 @@ int login()
                 {
                     fclose(fp);
                     scrolltext("\033[1;31m\t\tWrong Password.\n\033[0m\n");
-                    Sleep(2000);
+                    Beep(800,500);
+                    Sleep(500);
                     return 0;
                 }
             }
