@@ -49,7 +49,7 @@ int registration()
         if (strcmp(s.password, pass2) != 0)
         {
             fclose(fp);
-            printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n");
+            printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n"); //red
             Beep(800, 500);
             Sleep(500);
             registration();
@@ -65,7 +65,7 @@ int registration()
                 printf(".");
                 Sleep(500);
             }
-            printf("\033[1;32m\r\t\tRegistration successful!\n\033[0m\n");
+            printf("\033[1;32m\r\t\tRegistration successful!\n\033[0m\n");//green
             printf("\n\t\tYour ID is your roll number : %s\n", s.roll);
             system("pause");
             login();
@@ -87,7 +87,7 @@ int registration()
         takepassword(pass2);
         if (strcmp(t.password, pass2) != 0)
         {
-            printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n");
+            printf("\033[1;31m\n\t\tPasswords do not match.\n\033[0m\n");//red
             fclose(fp);
             Beep(800, 500);
             Sleep(500);
@@ -104,7 +104,7 @@ int registration()
                 printf(".");
                 Sleep(500);
             }
-            printf("\033[1;32m\r\t\tRegistration successful!\n\033[0m\n");
+            printf("\033[1;32m\r\t\tRegistration successful!\n\033[0m\n");//green
             system("pause");
             login();
         }
@@ -154,7 +154,7 @@ int login()
                         printf(".");
                         Sleep(500);
                     }
-                    printf("\033[1;32m\r\t\tLogin successful!\n\033[0m\n");
+                    printf("\033[1;32m\r\t\tLogin successful!\n\033[0m\n"); //green
                     system("pause");
                     options(id,password);
                     return 1;
@@ -162,7 +162,7 @@ int login()
                 else
                 {
                     fclose(fp);
-                    scrolltext("\033[1;31m\n\t\tWrong Password.\n\033[0m\n");
+                    scrolltext("\033[1;31m\n\t\tWrong Password.\n\033[0m\n"); //red
                     Beep(800,500);
                     Sleep(500);
                     login();
@@ -171,7 +171,7 @@ int login()
             }
         }
         fclose(fp);
-        printf("\033[1;31m\n\t\tUser not found.\n\033[0m");
+        printf("\033[1;31m\n\t\tUser not found.\n\033[0m");//red
         Beep(800,500);
         system("pause");
         login();
@@ -199,7 +199,7 @@ int login()
                         printf(".");
                         Sleep(500);
                     }
-                    printf("\033[1;32m\r\t\tLogin successful!\n\033[0m\n");
+                    printf("\033[1;32m\r\t\tLogin successful!\n\033[0m\n");//green
                     system("pause");
                     optiont(email,password);
                     return 1;
@@ -207,7 +207,7 @@ int login()
                 else
                 {
                     fclose(fp);
-                    scrolltext("\033[1;31m\t\tWrong Password.\n\033[0m\n");
+                    scrolltext("\033[1;31m\t\tWrong Password.\n\033[0m\n");//red
                     Beep(800,500);
                     Sleep(500);
                     return 0;
@@ -250,7 +250,7 @@ int takepassword(char pass[50])
         }
         else if (ch == 8)
         {
-            if (i >0)
+            if (i > 0)
             {
                 i--;
                 printf("\b \b");

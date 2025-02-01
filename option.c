@@ -175,19 +175,17 @@ int cgpcal()
 
     return 0;
 }
-
-typedef struct
-{
-    char name[50];
-    int votes;
-} candidate;
-
-candidate candidates[MAX];
-int candidates_count;
-
-
 int elect_cr()
 {
+    typedef struct
+    {
+        char name[50];
+        int votes;
+    } candidate;
+
+    candidate candidates[MAX];
+    int candidates_count;
+
     system("cls");
     printf("\t\t\t---CR Election---");
     printf("\n\nEnter the number of candidates (max %d): ", MAX);
@@ -197,7 +195,7 @@ int elect_cr()
     {
         printf("\t\tInvalid number of candidates. Maximum is %d.\n", MAX);
         system("pause");
-        return 1;
+        return -1;
     }
 
     for (int i = 0; i < candidates_count; i++)
@@ -219,13 +217,24 @@ int elect_cr()
             char name[50];
             printf("\tVote %d: ", i + 1);
             fflush(stdout);
-            takeinput(name);
-            printf("\033[F");//get back cursor to the previous line
-            printf("\033[K");//clear the line
-            if (!vote(name))
+
+            scanf("%s", name);
+            printf("\033[F"); // get back cursor to the previous line
+            printf("\033[K"); // clear the line
+            int valid_vote = 0;
+            for (int j = 0; j < candidates_count; j++)
             {
-                scrolltext("Invalid vote.");
-                i--;
+                if (strcmp(candidates[j].name, name) == 0)
+                {
+                    candidates[j].votes++;
+                    valid_vote = 1;
+                    break;
+                }
+            }
+            if (valid_vote == 0)
+            {
+                printf("Invalid vote. Try again.\n");
+                i--; // repeat this vote
             }
         }
 
@@ -238,14 +247,33 @@ int elect_cr()
             }
         }
 
-        if (check_tie(most_votes))
+        int tie_count = 0;
+        for (int i = 0; i < candidates_count; i++)
+        {
+            if (candidates[i].votes == most_votes)
+            {
+                tie_count++;
+            }
+        }
+
+        if (tie_count > 1)
         {
             printf("\nThere is a tie. A re-election is required among the tied candidates.\n");
-            reset_votes();
+            for (int i = 0; i < candidates_count; i++)
+            {
+                candidates[i].votes = 0;
+            }
         }
         else
         {
-            print_winner();
+            printf("\t\t\n--- Election Results ---\n");
+            for (int i = 0; i < candidates_count; i++)
+            {
+                if (candidates[i].votes == most_votes)
+                {
+                    printf("The CR is %s with %d votes\n", candidates[i].name, candidates[i].votes);
+                }
+            }
             break;
         }
     }
@@ -253,63 +281,6 @@ int elect_cr()
     system("pause");
     return 0;
 }
-
-bool vote(char name[])
-{
-    for (int i = 0; i < candidates_count; i++)
-    {
-        if (strcmp(candidates[i].name, name) == 0)
-        {
-            candidates[i].votes++;
-            return true;
-        }
-    }
-    return false;
-}
-
-
-void print_winner(void)
-{
-    int most_votes = 0;
-
-    for (int i = 0; i < candidates_count; i++)
-    {
-        if (candidates[i].votes > most_votes)
-        {
-            most_votes = candidates[i].votes;
-        }
-    }
-
-    for (int i = 0; i < candidates_count; i++)
-    {
-        if (candidates[i].votes == most_votes)
-        {
-            printf("\n\THE CR IS : %s\n", candidates[i].name);
-        }
-    }
-}
-
-bool check_tie(int most_votes)
-{
-    int tie_count = 0;
-    for (int i = 0; i < candidates_count; i++)
-    {
-        if (candidates[i].votes == most_votes)
-        {
-            tie_count++;
-        }
-    }
-    return tie_count > 1;
-}
-
-void reset_votes(void)
-{
-    for (int i = 0; i < candidates_count; i++)
-    {
-        candidates[i].votes = 0;
-    }
-}
-
 
 int searchstd()
 {
@@ -338,7 +309,7 @@ int searchstd()
     }
     fclose(fp);
 
-    if (!found)
+    if (found == 0)
     {
         printf("\n\t\tNo student found with ID %s\n", roll);
         system("pause");

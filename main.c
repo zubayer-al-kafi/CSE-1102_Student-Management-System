@@ -1,7 +1,7 @@
 /*
-    CSE 1102 Project
+            CSE 1102 Project
     PROJECT NAME : STUDENT MANAGEMENT SYSTEM
-            by
+                by
     2307073,2307074,2307076
 */
 
@@ -22,11 +22,11 @@ int main()
     {
     case 1:
         system("cls");
-        registration(); //calling the registration function
+        registration();
         break;
     case 2:
         system("cls");
-        login(); //calling the login function
+        login();
         break;
     case 3:
         scrolltext("\t\t\tExiting");
@@ -35,7 +35,7 @@ int main()
             printf(".");
             Sleep(500);
         }
-        exit(0);//exiting the program
+        exit(0);
         break;
     default:
         scrolltext("\t\t\t---Invalid choice---\n");
